@@ -127,6 +127,33 @@ Ein moderner Sprach-Chatbot, erstellt mit Node.js, React, Vite und Tailwind CSS.
 
 - **Rasa Integration:** Stelle sicher, dass Rasa korrekt läuft und die Konversationen verarbeitet.
 
+##Einrichten der EC2-Instanz 
+
+### Update und Installation der notwendigen Pakete
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+### Node.js und npm installieren
+Installieren Sie Node.js aus den offiziellen NodeSource-Repositorys:
+```bash
+curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt install -y nodejs
+```
+### Überprüfen Sie die Installation von Node.js und npm
+```bash
+node -v
+npm -v
+```
+### MySQL installieren
+```bash
+sudo apt install -y mysql-server
+```
+### xdg-utils installieren
+```bash
+sudo apt install -y xdg-utils
+```
+
 ## Lizenz
 
 Dieses Projekt ist durch eine proprietäre Lizenz geschützt. Alle Rechte vorbehalten. Die Nutzung, Vervielfältigung, Modifikation, Zusammenführung, Veröffentlichung, Verbreitung, Unterlizenzierung und/oder der Verkauf von Kopien der Software sind ohne ausdrückliche Genehmigung des Autors/der Autoren nicht gestattet.
