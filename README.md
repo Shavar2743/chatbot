@@ -1,6 +1,6 @@
 # My Chatbot
 
-Ein moderner, kostenloser und Open-Source Sprach-Chatbot, erstellt mit Node.js, React, Vite und Tailwind CSS. Das Projekt ist auf einem Ubuntu-Server gehostet und nutzt Mozilla DeepSpeech und TTS für Sprachschnittstellen.
+Ein moderner Sprach-Chatbot, erstellt mit Node.js, React, Vite und Tailwind CSS. Das Projekt ist auf einem Ubuntu-Server gehostet und nutzt Mozilla DeepSpeech und TTS für Sprachschnittstellen.
 
 ## Inhaltsverzeichnis
 
@@ -8,7 +8,6 @@ Ein moderner, kostenloser und Open-Source Sprach-Chatbot, erstellt mit Node.js, 
   - [Voraussetzungen](#voraussetzungen)
   - [Frontend](#frontend)
   - [Backend](#backend)
-- [Ordnerstruktur](#ordnerstruktur)
 - [Nginx Konfiguration](#nginx-konfiguration)
 - [Nutzung](#nutzung)
 - [Entwicklung](#entwicklung)
