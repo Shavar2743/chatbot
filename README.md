@@ -127,7 +127,7 @@ Ein moderner Sprach-Chatbot, erstellt mit Node.js, React, Vite und Tailwind CSS.
 
 - **Rasa Integration:** Stelle sicher, dass Rasa korrekt läuft und die Konversationen verarbeitet.
 
-##Einrichten der EC2-Instanz 
+# Einrichten der EC2-Instanz 
 
 ### Update und Installation der notwendigen Pakete
 ```bash
