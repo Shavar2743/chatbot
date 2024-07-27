@@ -5,14 +5,29 @@ function App() {
   const [input, setInput] = useState('');
 
   const sendMessage = async () => {
-    const response = await fetch('/chat', {
+    const response = await fetch('http://localhost:3001/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: input })
     });
-    const data = await response.json();
-    setMessages([...messages, { sender: 'user', text: input }, { sender: 'bot', text: data.reply }]);
-    setInput('');
+
+    try {
+      const response = await fetch('http://localhost:3001/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: input })
+      });
+    
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    
+      const data = await response.json();
+      setMessages([...messages, { sender: 'user', text: input }, { sender: 'bot', text: data.reply }]);
+      setInput('');
+    } catch (error) {
+      console.error('Error:', error);
+    }       
   };
 
   return (
