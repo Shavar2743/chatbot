@@ -1,249 +1,251 @@
-# My Chatbot
+# Einrichtung eines Rasa-Chatbots
 
-## Planung zur Erstellung eines Sprach-Chatbots
+## Systemanforderungen
+- Python 3.10.x
+- Node.js und npm
+- Git
+- Visual Studio Code
 
-Einen Sprach-Chatbot zu bauen ist ein mehrstufiger Prozess, der verschiedene Technologien und Entwicklungsphasen umfasst. Hier sind die wesentlichen Schritte, die du befolgen kannst:
+## Installation von Python 3.10.x
 
-### Ziel und Anwendungsfall definieren
+1. **Überprüfen der installierten Python-Version:**
 
-- Bestimme den Zweck des Chatbots (z.B. Kundenservice, Informationsbereitstellung, Unterhaltung).
-- Identifiziere die Zielgruppe und ihre Anforderungen.
-
-### Technologiestapel auswählen
-
-- NLP-Frameworks und -Bibliotheken: Rasa
-- Programmiersprache: JavaScript (Node.js)
-- Sprachschnittstellen: Mozilla DeepSpeech (Speech-to-Text), Mozilla TTS (Text-to-Speech)
-
-### Grundgerüst erstellen
-
-1. **Entwicklungsumgebung einrichten:**
-
-    ```bash
-    sudo apt update
-    sudo apt upgrade -y
-    curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-    sudo apt install -y nodejs
-    sudo apt install -y mysql-server
-    sudo apt install -y xdg-utils
+    ```powershell
+    python --version
+    python3 --version
     ```
 
-2. **Basis-Chatbot erstellen:**
-    Implementiere die grundlegende Logik für das Empfangen und Senden von Nachrichten mit Node.js und Express.
+2. **Falls notwendig, Python 3.10.11 herunterladen und installieren:**
+    - Lade den Python 3.10.11 Installer von der offiziellen [Python-Website](https://www.python.org/downloads/release/python-31011/) herunter.
+    - Installiere Python 3.10.11 und wähle die Option "Add Python to PATH" während der Installation aus.
 
-### Natürliche Sprachverarbeitung (NLP) integrieren
+3. **Überprüfe die Installation:**
 
-- **Spracherkennung:** Nutze Mozilla DeepSpeech, um gesprochene Eingaben in Text umzuwandeln.
-- **Intent-Erkennung und Entitätsextraktion:** Verwende Rasa, um die Absicht hinter den Benutzeranfragen zu erkennen und relevante Informationen zu extrahieren.
-- **Antwortgenerierung:** Implementiere Logik oder nutze Rasa, um passende Antworten zu generieren.
+    ```powershell
+    python3 --version
+    ```
 
-### Dialogfluss gestalten
+## Einrichtung einer virtuellen Umgebung und Installation von Rasa
 
-- **Dialogzustände und -übergänge definieren:** Erstelle eine Struktur, die die möglichen Zustände und Übergänge im Dialog definiert.
-- **Kontextmanagement:** Halte den Kontext des Gesprächs aufrecht, um zusammenhängende und relevante Antworten zu geben.
+1. **Erstelle eine virtuelle Umgebung:**
 
-### Sprachsynthese integrieren
+    ```powershell
+    python3 -m venv rasa-env
+    ```
 
-- **Antworten in Sprache umwandeln:** Nutze Mozilla TTS, um Textantworten in gesprochene Sprache umzuwandeln.
+2. **Aktiviere die virtuelle Umgebung:**
 
-### Benutzeroberfläche entwickeln
+    - Auf Windows:
 
-- **Web- oder Mobilanwendung:** Erstelle eine Schnittstelle mit React, Vite und Tailwind CSS, über die Benutzer mit dem Chatbot interagieren können.
-- **Sprachschnittstelle:** Implementiere ein Mikrofon für die Eingabe und Lautsprecher oder Kopfhörer für die Ausgabe.
+        ```powershell
+        .\rasa-env\Scripts\activate
+        ```
 
-### Training und Optimierung
+3. **Überprüfe die Python-Version in der virtuellen Umgebung:**
 
-- **Daten sammeln und annotieren:** Sammle Dialogdaten, um den Chatbot zu trainieren und zu verbessern.
-- **Feedback einholen:** Nutze Benutzerfeedback, um Schwächen zu identifizieren und den Chatbot kontinuierlich zu optimieren.
+    ```powershell
+    python --version
+    ```
 
-### Sicherheit und Datenschutz gewährleisten
+4. **Aktualisiere pip, setuptools und wheel in der virtuellen Umgebung:**
 
-- **Datenverschlüsselung:** Stelle sicher, dass alle Daten während der Übertragung und Speicherung verschlüsselt sind.
-- **Datenschutzrichtlinien:** Implementiere Maßnahmen, um die Privatsphäre der Benutzer zu schützen und die Einhaltung von Datenschutzbestimmungen sicherzustellen.
+    ```powershell
+    pip install --upgrade pip setuptools wheel
+    ```
 
-### Testen und Bereitstellen
+5. **Installiere Rasa:**
 
-- **Umfangreiches Testen:** Teste den Chatbot unter verschiedenen Bedingungen und Szenarien, um sicherzustellen, dass er robust und zuverlässig ist.
-- **Bereitstellung:** Veröffentliche den Chatbot auf der gewünschten Plattform und mache ihn für die Benutzer verfügbar.
+    ```powershell
+    pip install rasa
+    ```
 
----
+6. **Initialisiere ein neues Rasa-Projekt:**
 
-## Inhaltsverzeichnis
+    ```powershell
+    mkdir my-chatbot-rasa
+    cd my-chatbot-rasa
+    rasa init
+    ```
 
-- Installation
-- Voraussetzungen
-- Frontend
-- Backend
-- Nginx Konfiguration
-- Nutzung
-- Entwicklung
-- Einrichten der EC2-Instanz
-- Lizenz
+## Einrichtung des Backend mit Node.js und Express
 
----
-
-## Installation
-
-### Voraussetzungen
-
-- Node.js (v14 oder höher)
-- Nginx
-- Git
-
-### Frontend
-
-1. **Projekt initialisieren:**
+1. **Erstelle ein neues Verzeichnis für das Backend und initialisiere ein Node.js-Projekt:**
 
     ```bash
+    mkdir my-chatbot-backend
+    cd my-chatbot-backend
+    npm init -y
+    ```
+
+2. **Installiere die notwendigen Pakete:**
+
+    ```bash
+    npm install express body-parser axios
+    ```
+
+3. **Erstelle eine `index.js`-Datei und füge den folgenden Code hinzu:**
+
+    ```javascript
+    const express = require('express');
+    const bodyParser = require('body-parser');
+    const axios = require('axios');
+
+    const app = express();
+    app.use(bodyParser.json());
+
+    const RASA_SERVER = 'http://localhost:5005/webhooks/rest/webhook';
+
+    app.post('/chat', async (req, res) => {
+        const message = req.body.message;
+
+        try {
+            const response = await axios.post(RASA_SERVER, {
+                sender: 'user',
+                message: message
+            });
+
+            const replies = response.data.map((r) => r.text).join(' ');
+            res.json({ reply: replies });
+        } catch (error) {
+            res.status(500).send('Error communicating with Rasa server');
+        }
+    });
+
+    const PORT = process.env.PORT || 3001;
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+    ```
+
+4. **Starte den Backend-Server:**
+
+    ```bash
+    node index.js
+    ```
+
+## Einrichtung des Frontend mit React, Vite und Tailwind CSS
+
+1. **Erstelle ein neues Vite-Projekt mit React:**
+
+    ```bash
+    mkdir my-chatbot-frontend
+    cd my-chatbot-frontend
     npm create vite@latest my-chatbot-frontend --template react
     cd my-chatbot-frontend
     npm install
     ```
 
-2. **Tailwind CSS installieren und konfigurieren:**
+2. **Installiere Tailwind CSS:**
 
     ```bash
     npm install -D tailwindcss postcss autoprefixer
     npx tailwindcss init -p
     ```
 
-3. **Passe die App-Komponente und andere relevante Dateien an.**
-4. **Starte den Entwicklungsserver und baue das Projekt für die Produktion:**
+3. **Konfiguriere Tailwind CSS:**
 
-    ```bash
-    npm run dev
-    npm run build
-    ```
+    - Bearbeite die Datei `tailwind.config.js`:
 
-### Backend
-
-1. **Projekt initialisieren:**
-
-    ```bash
-    mkdir my-chatbot-backend
-    cd my-chatbot-backend
-    npm init -y
-    npm install express body-parser axios
-    ```
-
-2. **Erstelle den Server und definiere die Routen für die Kommunikation mit Rasa.**
-3. **Starte den Backend-Server:**
-
-    ```bash
-    node index.js
-    ```
-
-### Nginx Konfiguration
-
-1. **Bearbeite die Nginx-Konfigurationsdatei (/etc/nginx/sites-available/default):**
-
-    ```bash
-    sudo nano /etc/nginx/sites-available/default
-    ```
-
-2. **Füge die Konfiguration für das Routing des Frontends und Backends hinzu:**
-
-    ```nginx
-    server {
-        listen 80;
-
-        server_name your_domain.com;
-
-        location / {
-            root /var/www/my-chatbot/my-chatbot-frontend/dist;
-            try_files $uri $uri/ /index.html;
+        ```javascript
+        module.exports = {
+          content: [
+            "./index.html",
+            "./src/**/*.{js,ts,jsx,tsx}",
+          ],
+          theme: {
+            extend: {},
+          ],
+          plugins: [],
         }
+        ```
 
-        location /chat {
-            proxy_pass http://localhost:3001/chat;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
-            proxy_set_header Host $host;
-            proxy_cache_bypass $http_upgrade;
-        }
+    - Erstelle oder bearbeite die Datei `src/index.css` und füge Folgendes hinzu:
+
+        ```css
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+        ```
+
+4. **Erstelle eine `App.jsx`-Datei im Verzeichnis `src` und füge den folgenden Code hinzu:**
+
+    ```javascript
+    import React, { useState } from 'react';
+
+    function App() {
+      const [messages, setMessages] = useState([]);
+      const [input, setInput] = useState('');
+
+      const sendMessage = async () => {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: input })
+        });
+        const data = await response.json();
+        setMessages([...messages, { sender: 'user', text: input }, { sender: 'bot', text: data.reply }]);
+        setInput('');
+      };
+
+      return (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+          <div className="bg-white p-4 rounded shadow-md w-96">
+            <div className="mb-4">
+              <div id="messages" className="space-y-2">
+                {messages.map((msg, index) => (
+                  <div key={index} className={`message ${msg.sender === 'bot' ? 'text-blue-500' : 'text-green-500'}`}>
+                    {msg.sender}: {msg.text}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex space-x-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className="border rounded w-full py-2 px-3"
+                placeholder="Type a message"
+              />
+              <button onClick={sendMessage} className="bg-blue-500 text-white py-2 px-4 rounded">
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      );
     }
+
+    export default App;
     ```
 
-3. **Starte Nginx neu, um die Änderungen zu übernehmen:**
+5. **Starte den Entwicklungsserver:**
 
     ```bash
-    sudo systemctl restart nginx
-    ```
-
-## Nutzung
-
-1. **Starte das Backend:**
-
-    ```bash
-    cd my-chatbot/my-chatbot-backend
-    node index.js
-    ```
-
-2. **Starte das Frontend:**
-
-    ```bash
-    cd my-chatbot/my-chatbot-frontend
     npm run dev
     ```
 
-3. **Öffne deinen Browser und gehe zu der konfigurierten Domain.**
+## Chatbot testen
 
-## Entwicklung
+1. **Starte den Rasa-Server:**
 
-- **Frontend Entwicklung:** Starte den Entwicklungsserver für das Frontend:
-
-    ```bash
-    cd my-chatbot/my-chatbot-frontend
-    npm run dev
+    ```powershell
+    cd my-chatbot-rasa
+    rasa run
     ```
 
-- **Backend Entwicklung:** Starte den Backend-Server und entwickle die Logik weiter:
+2. **Starte das Backend:**
 
     ```bash
-    cd my-chatbot/my-chatbot-backend
+    cd my-chatbot-backend
     node index.js
     ```
 
-- **Rasa Integration:** Stelle sicher, dass Rasa korrekt läuft und die Konversationen verarbeitet.
-
-## Einrichten der EC2 Instanz
-
-1. **Update und Installation der notwendigen Pakete:**
+3. **Starte das Frontend:**
 
     ```bash
-    sudo apt update
-    sudo apt upgrade -y
+    cd my-chatbot-frontend
+    npm run dev
     ```
 
-2. **Node.js und npm installieren:**
-
-    ```bash
-    curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-    sudo apt install -y nodejs
-    ```
-
-3. **Überprüfen Sie die Installation von Node.js und npm:**
-
-    ```bash
-    node -v
-    npm -v
-    ```
-
-4. **MySQL installieren:**
-
-    ```bash
-    sudo apt install -y mysql-server
-    ```
-
-5. **xdg-utils installieren:**
-
-    ```bash
-    sudo apt install -y xdg-utils
-    ```
-
-## Lizenz
-
-Dieses Projekt ist durch eine proprietäre Lizenz geschützt. Alle Rechte vorbehalten. Die Nutzung, Vervielfältigung, Modifikation, Zusammenführung, Veröffentlichung, Verbreitung, Unterlizenzierung und/oder der Verkauf von Kopien der Software sind ohne ausdrückliche Genehmigung des Autors/der Autoren nicht gestattet.
-
-Für Genehmigungsanfragen kontaktiere bitte Christopher Breunig, Johannes Scholl und Markus Heindle.
+4. **Öffne deinen Browser und gehe zu `http://localhost:3000`, um den Chatbot zu testen.**
