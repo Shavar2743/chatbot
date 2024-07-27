@@ -47,10 +47,10 @@
     python --version
     ```
 
-4. **Aktualisiere pip in der virtuellen Umgebung:**
+4. **Aktualisiere pip, setuptools und wheel in der virtuellen Umgebung:**
 
     ```powershell
-    pip install --upgrade pip
+    pip install --upgrade pip setuptools wheel
     ```
 
 5. **Installiere Rasa:**
